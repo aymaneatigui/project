@@ -1,8 +1,8 @@
 from django.urls import path
-from appAPI.views import UsersList
-from rest_framework.routers import DefaultRouter
+from appAPI.views import UsersList, UserRUD
 
-router = DefaultRouter(trailing_slash=False)
-router.register('users', UsersList, basename='users')
 
-urlpatterns = router.urls
+urlpatterns =[
+    path('users/', UsersList.as_view(), name='users'),
+    path("user/<int:pk>/", UserRUD.as_view(), name='user'),
+]
