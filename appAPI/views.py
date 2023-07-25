@@ -3,15 +3,15 @@ from rest_framework.mixins import ListModelMixin, CreateModelMixin, UpdateModelM
 from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from rest_framework import status
-from appAPI.models import User
+from appAPI.models import MyUser
 from appAPI.Serializer import UserSerializer
 
 class UsersList(GenericAPIView, ListModelMixin, CreateModelMixin):
-    queryset = User.objects.all()
+    queryset = MyUser.objects.all()
     serializer_class = UserSerializer
     
     def get(self, request, *args, **kwargs):
-        queryset = User.objects.all()
+        queryset = MyUser.objects.all()
         serializer_data = UserSerializer(queryset, many = True)
         return Response({
             'Users Number': queryset.count(),
@@ -25,11 +25,11 @@ class UsersList(GenericAPIView, ListModelMixin, CreateModelMixin):
         return Response(serializer_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserRUD(GenericAPIView, ListModelMixin, UpdateModelMixin, DestroyModelMixin):
-    queryset = User.objects.all()
+    queryset = MyUser.objects.all()
     serializer_class = UserSerializer
     
     def get_user(self, user_id):
-        return get_object_or_404(User, pk=user_id)
+        return get_object_or_404(MyUser, pk=user_id)
     
     def get(self, request, *args, **kwargs):
         user_id = kwargs.get('pk')
