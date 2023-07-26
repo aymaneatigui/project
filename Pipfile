@@ -8,6 +8,7 @@ django = " 4.2.2"
 djangorestframework = "3.14.0"
 mysqlclient = "*"
 django-filter = "*"
+bleach = "*"
 
 [dev-packages]
 

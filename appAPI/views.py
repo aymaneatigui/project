@@ -7,6 +7,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from appAPI.models import MyUser
 from appAPI.Serializer import UserSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from django.core.paginator import Paginator, EmptyPage
 
 class UsersList(GenericAPIView, ListModelMixin, CreateModelMixin):
     queryset = MyUser.objects.all()
@@ -17,10 +18,18 @@ class UsersList(GenericAPIView, ListModelMixin, CreateModelMixin):
     ordering_fields = ['username']
 
     def get(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer_data = UserSerializer(queryset, many = True)
+        users_data = self.filter_queryset(self.get_queryset())
+        perpage = request.query_params.get('perpage',default=2)
+        page= request.query_params.get('page',default=1)
+        paginator = Paginator(users_data,per_page=perpage)
+        try:
+            users_data=paginator.page(number=page)
+        except EmptyPage:
+            users_data = []
+
+        serializer_data = UserSerializer(users_data, many = True)
         return Response({
-            'Users Number': queryset.count(),
+            'Users Number': paginator.count,
             'Users': serializer_data.data
         }, status = status.HTTP_200_OK)
     
