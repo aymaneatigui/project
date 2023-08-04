@@ -9,11 +9,11 @@ class SuperUser(UserAdmin):
     # Customize the fields shown on the user detail page for superusers
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_staff', 'is_active', 'user_permissions')}),
+        ('Personal Info', {'fields': ('username','first_name', 'last_name')}),
+        ('Permissions', {'fields': ('is_staff', 'is_active', 'groups')}),
         # Add any other custom fieldsets here
     )
 
 # Register your models here.
-
+#, SuperUser
 admin.site.register(MyUser, SuperUser)

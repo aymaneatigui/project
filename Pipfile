@@ -9,6 +9,9 @@ djangorestframework = "3.14.0"
 mysqlclient = "*"
 django-filter = "*"
 bleach = "*"
+djangorestframework-jwt = "*"
+djangorestframework-simplejwt = "*"
+djoser = "*"
 
 [dev-packages]
 
